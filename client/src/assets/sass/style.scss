@@ -114,3 +114,10 @@ body {
         @include border-radius(5px);
     }
 }
+
+.booking {
+  .header {
+    @extend .jumbotron;
+    text-align: center;
+  }
+}

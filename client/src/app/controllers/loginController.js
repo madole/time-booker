@@ -23,7 +23,7 @@ App.LoginController = Ember.Controller.extend({
           }
           else {
             // Redirect to 'articles' by default.
-            self.transitionToRoute('articles');
+            self.transitionToRoute('booking');
           }
         }
       });
