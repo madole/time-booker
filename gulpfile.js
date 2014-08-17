@@ -686,6 +686,10 @@ gulp.task('compass', function() {
             css: 'client/src/assets/styles',
             sass: 'client/src/assets/sass'
         }))
+        .on('error', function(err) {
+            var msg = err.toString('utf8');
+            gutil.log(COLORS.red(msg));
+        })
         .pipe(gulp.dest('client/src/assets/styles/'));
 });
 
