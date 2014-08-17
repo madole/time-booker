@@ -294,7 +294,7 @@ gulp.task('jshint:client', 'Hint client JavaScripts files', function () {
         .pipe(jshint('client/.jshintrc'))
         .pipe(jshint.reporter('jshint-stylish'))
         .pipe(gulpif(!isWatching, jshint.reporter('fail')))
-        .pipe(refresh(browser))
+//        .pipe(refresh(browser))
         .pipe(size());
 });
 
@@ -307,7 +307,7 @@ gulp.task('jshint:server', 'Hint server JavaScripts files', function () {
         .pipe(jshint('server/.jshintrc'))
         .pipe(jshint.reporter('jshint-stylish'))
         .pipe(gulpif(!isWatching, jshint.reporter('fail')))
-        .pipe(refresh(browser))
+//        .pipe(refresh(browser))
         .pipe(size());
 });
 
@@ -358,7 +358,7 @@ gulp.task('htmlhint', 'Hint HTML files', function () {
                 hasHtmlHintError = true;
             }
         }))
-        .pipe(refresh(browser))
+//        .pipe(refresh(browser))
         .pipe(size())
         .on('end', errorReporter);
 });
