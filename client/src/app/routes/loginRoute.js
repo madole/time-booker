@@ -1,5 +1,5 @@
 App.LoginRoute = Ember.Route.extend({
-    setupController: function (controller, context) {
-        controller.reset();
-    }
+  setupController: function (controller, model) {
+      controller.reset();
+  }
 });

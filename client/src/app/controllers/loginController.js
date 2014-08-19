@@ -1,7 +1,7 @@
 App.LoginController = Ember.Controller.extend({
   actions: {
     login: function() {
-      var self = this,
+      var that = this,
         data = this.getProperties('username', 'password');
       // Clear out any error messages.
       this.set('errorMessage', null);
@@ -11,19 +11,18 @@ App.LoginController = Ember.Controller.extend({
         type: 'POST',
         data: data
       }).then(function(response) {
-
-        self.set('errorMessage', response.message);
+        that.controllerFor('application').set('token', response.token);
+        that.controllerFor('application').set('isAuthenticated', !!response.token);
+        that.set('errorMessage', response.message);
         if (response.success) {
-          self.set('token', response.token);
-
-          var attemptedTransition = self.get('attemptedTransition');
+          var attemptedTransition = that.get('attemptedTransition');
           if (attemptedTransition) {
             attemptedTransition.retry();
-            self.set('attemptedTransition', null);
+            that.set('attemptedTransition', null);
           }
           else {
-            // Redirect to 'articles' by default.
-            self.transitionToRoute('booking');
+            // Redirect to 'booking' by default.
+            that.transitionToRoute('booking');
           }
         }
       });
@@ -35,10 +34,5 @@ App.LoginController = Ember.Controller.extend({
       password: '',
       errorMessage: ''
     });
-  },
-
-  token: localStorage.token,
-  tokenChanged: function() {
-    localStorage.token = this.get('token');
-  }.observes('token')
+  }
 });

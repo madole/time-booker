@@ -2,10 +2,14 @@
     <div class="navigation-bar">
             <a class="brand-image" href="#"><img src="assets/images/cam-logo-text-long.png" alt="cam logo"/></a>
             <ul>
-                <li>{{#link-to "articles" }}Articles{{/link-to}}</li>
-                <li>{{#link-to "photos" }}Photos{{/link-to}}</li>
-                <li>{{#link-to "booking" }}Booking{{/link-to}}</li>
-                <li>{{#link-to "login" }}Login{{/link-to}}</li>
+                {{#if isAuthenticated}}
+                    <li>{{#link-to "articles" }}Articles{{/link-to}}</li>
+                    <li>{{#link-to "photos" }}Photos{{/link-to}}</li>
+                    <li>{{#link-to "booking" }}Booking{{/link-to}}</li>
+                    <li>{{#link-to "logout" }}Logout{{/link-to}}</li>
+                {{else}}
+                    <li>{{#link-to "login" }}Login{{/link-to}}</li>
+                {{/if}}
             </ul>
     </div>
 

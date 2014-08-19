@@ -1,4 +1,6 @@
-/**
- * Created by Madole on 17/08/2014.
- */
-App.BookingRoute = App.AuthenticatedRoute.extend({});
+App.BookingRoute = App.AuthenticatedRoute.extend({
+
+  model: function () {
+    return this.getJSONWithToken('/booking.json');
+  }
+});

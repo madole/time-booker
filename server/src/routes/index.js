@@ -54,6 +54,12 @@ module.exports = function (app) {
         }
     });
 
+    app.get('/booking.json', function (req, res) {
+        if (validTokenProvided(req, res)) {
+            res.send(seedData.ARTICLES);
+        }
+    });
+
     // Returns URL to pic of the day.
     app.get('/photos.json', function (req, res) {
         if (validTokenProvided(req, res)) {
