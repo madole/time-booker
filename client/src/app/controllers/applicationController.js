@@ -4,6 +4,6 @@ App.ApplicationController = Ember.Controller.extend({
 
   isAuthenticated: function() {
     return !!this.get('token');
-  }.property('localStorage.token')
+  }.property('token')
 
 });
