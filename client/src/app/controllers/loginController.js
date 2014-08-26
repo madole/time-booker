@@ -4,17 +4,16 @@ App.LoginController = Ember.Controller.extend({
       var that = this,
         data = this.getProperties('username', 'password');
       // Clear out any error messages.
-      this.set('errorMessage', null);
+      this.set('errorMessage', '');
 
       ajax.request({
         url: '/auth.json',
         type: 'POST',
         data: data
       }).then(function(response) {
-        that.controllerFor('application').set('token', response.token);
-        that.controllerFor('application').set('isAuthenticated', !!response.token);
         that.set('errorMessage', response.message);
         if (response.success) {
+          App.set('authToken', response.token);
           var attemptedTransition = that.get('attemptedTransition');
           if (attemptedTransition) {
             attemptedTransition.retry();

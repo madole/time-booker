@@ -4,8 +4,7 @@
 App.LogoutRoute = Ember.Route.extend({
   beforeModel: function() {
     localStorage.clear();
-    this.controllerFor('application').set('token', null);
-    this.controllerFor('application').set('isAuthenticated', false);
+    App.set('authToken', null);
     this.transitionTo('login');
   }
 });

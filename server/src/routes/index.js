@@ -13,7 +13,20 @@ module.exports = function (app) {
     // TODO (martin): this should be moved to auth.js. We still need to figure out how we gonna load all routes at once
     var seedData = require('../config/seedData');
     // Add Authentication routes
-    var currentToken;
+    var _currentToken;
+
+
+  function generateRandom() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+
+  function guid() {
+    return generateRandom() + generateRandom() + '-' + generateRandom() + '-' + generateRandom() + '-' +
+      generateRandom() + '-' + generateRandom() + generateRandom() + generateRandom();
+  }
+
     app.post('/auth.json', function (req, res) {
 
         var body = req.body,
@@ -22,10 +35,10 @@ module.exports = function (app) {
 
         if (username === 'ember' && password === 'casts') {
             // Generate and save the token (forgotten upon server restart).
-            currentToken = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            _currentToken = guid();
             res.send({
                 success: true,
-                token: currentToken
+                token: _currentToken
             });
         } else {
             res.send({
@@ -40,7 +53,7 @@ module.exports = function (app) {
         // Check POST, GET, and headers for supplied token.
         var userToken = req.body.token || req.param('token') || req.headers.token;
 
-        if (!currentToken || userToken !== currentToken) {
+        if (!_currentToken || userToken !== _currentToken) {
             res.send(401, { error: 'Invalid token. You provided: ' + userToken });
             return false;
         }

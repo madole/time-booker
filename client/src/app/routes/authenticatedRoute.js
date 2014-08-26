@@ -1,7 +1,7 @@
 App.AuthenticatedRoute = Ember.Route.extend({
 
     beforeModel: function (transition) {
-        if (!this.controllerFor('application').get('token')) {
+        if (!App.get('authToken')) {
             this.redirectToLogin(transition);
         }
     },
@@ -13,7 +13,7 @@ App.AuthenticatedRoute = Ember.Route.extend({
     },
 
     getJSONWithToken: function (url) {
-        var token = this.controllerFor('application').get('token');
+        var token = App.get('authToken');
         return ajax.request({
             dataType: 'json',
             url: url,
@@ -28,7 +28,7 @@ App.AuthenticatedRoute = Ember.Route.extend({
                 this.redirectToLogin(transition);
             }
             else {
-                alert('Something went wrong');
+                console.log('Something went wrong');
             }
         }
     }

@@ -8,39 +8,45 @@
  
 module('Splash Page', {
   setup: function(){
-  Ember.run(this, function () {
-   });
+    App.reset();
+  },
+  teardown: function() {
+    App.reset();
   }
 });
 
 test('should show the login page if the user is not logged in', function() {
-    expect(1);
+  expect(1);
+  Ember.run(function() {
     visit('/');
     andThen(function() {
         equal(currentRouteName(), 'login');
-    })
+    });
+  });
 });
 
-test('Should display links for Ember Digest, Articles, Photos and Login', function() {
-  expect(3);
-  visit('/');
-  andThen(function() {
-    var el = find('a');
-    equal(el[1].innerText, 'Articles', 'Articles link must be present');
-    equal(el[2].innerText, 'Photos', 'Photos link must be present');
-    equal(el[3].innerText, 'Login', 'Login link must be present');
+test('Should display links for login', function() {
+  expect(1);
+  Ember.run(function(){
+    visit('/');
+    andThen(function() {
+      var el = find('a');
+      equal(el[1].innerText, 'Login', 'Login link must be present');
 
+    });
   });
 });
 
 test('Should go to login route if login link is clicked', function() {
   expect(1);
-  visit('/');
-  Ember.run(function() {
-        click('a:contains("Login")');
+  Ember.run(function(){
+    visit('/');
+
+    click('a:contains("Login")');
+
+    andThen(function() {
+      equal(currentRouteName(), 'login');
     });
-  andThen(function() {
-    equal(currentRouteName(), 'login');
   });
 });
 
@@ -54,7 +60,14 @@ module('Login Page', {
         jqXHR: {},
         textStatus: 'success'
     });
-
+    ajax.defineFixture('/booking.json', {
+      response: {
+          id:1,
+          booking: 'fake'
+        },
+      jqXHR: {},
+      textStatus: 'success'
+    });
     ajax.defineFixture('/articles.json', {
       response: [
         {
@@ -81,6 +94,7 @@ module('Login Page', {
     })
   },
   teardown: function() {
+    App.reset();
   }
 });
 
@@ -99,39 +113,30 @@ test('Should check the login form exists', function() {
 
 test('Should fill in login form with correct credentials and click submit', function() {
   expect(1);
-  visit('/login');
-  sucessfulLogin();
-  andThen(function() {
-    equal(currentRouteName(), 'articles');
+  Ember.run(function(){
+    visit('/login');
+    sucessfulLogin();
+    andThen(function() {
+      equal(currentRouteName(), 'booking');
+    });
   });
 });
 
-test('Display welcome message', function() {
-    expect(1);
-    visit('/');
-    andThen(function() {
-        sucessfulLogin().then(function(){
-            var el = find('h1');
-            equal(el.length, 1, 'H1 tag must be present');
-        });
-    });
-});
 
-test('Should Display index if user is logged in.', function() {
-    expect(2);
-    visit('/');
+test('Should display links for Ember Digest, Articles, Photos and Login', function() {
+  expect(4);
+  Ember.run(function(){
+    visit('/login');
+    sucessfulLogin();
     andThen(function() {
-        sucessfulLogin().then(function(){
-            var el = find('h1');
-            equal(el.length, 1, 'H1 tag must be present');
-        }).then(function() {
-            visit('/');
-            andThen(function() {
-                var el = find('h1');
-                equal(el.length, 1, 'H1 tag must be present');
-            });
-        })
+      var el = find('a');
+      equal(el[1].innerText, 'Articles', 'Articles link must be present');
+      equal(el[2].innerText, 'Photos', 'Photos link must be present');
+      equal(el[3].innerText, 'Booking', 'Login link must be present');
+      equal(el[4].innerText, 'Logout', 'Login link must be present');
+
     });
+  });
 });
 
 
@@ -153,6 +158,7 @@ module('Login Page', {
         });
     },
     teardown: function() {
+      App.reset();
     }
 });
 

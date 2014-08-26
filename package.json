@@ -17,7 +17,8 @@
     },
     {
       "name": "Andrew McDowell",
-      "mail": "madoliole@gmail.com"
+      "mail": "madoliole@gmail.com",
+      "url" : "http://madole.github.io"
     }
   ],
   "homepage": "https://github.com/cam-technologies/time-booker",
