@@ -115,7 +115,7 @@ test('Should fill in login form with correct credentials and click submit', func
   expect(1);
   Ember.run(function(){
     visit('/login');
-    sucessfulLogin();
+    successfulLogin();
     andThen(function() {
       equal(currentRouteName(), 'booking');
     });
@@ -127,7 +127,7 @@ test('Should display links for Ember Digest, Articles, Photos and Login', functi
   expect(4);
   Ember.run(function(){
     visit('/login');
-    sucessfulLogin();
+    successfulLogin();
     andThen(function() {
       var el = find('a');
       equal(el[1].innerText, 'Articles', 'Articles link must be present');
@@ -139,8 +139,22 @@ test('Should display links for Ember Digest, Articles, Photos and Login', functi
   });
 });
 
+test('Should log out when log out button is clicked after a successful login', function() {
+  expect(2);
+  Ember.run(function(){
+    visit('/login');
+    successfulLogin();
+    andThen(function(){
+      equal(currentRouteName(), 'booking', 'Should be taken to the booking page');
+      click('a:contains("Logout")');
+      andThen(function(){
+        equal(currentRouteName(), 'logout', 'Should log the user out');
+      });
+    });
+  });
+});
 
-function sucessfulLogin() {
+function successfulLogin() {
     fillIn('#username', 'ember');
     fillIn('#password', 'casts');
     return click('#loginSubmit');
